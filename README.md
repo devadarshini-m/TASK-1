@@ -11,7 +11,8 @@ Duration: JUNE to JULY 2024
 Mentor: MUZAMMIL AHMED
 
 OVERVIEW OF THE PROJECT
-PROJECT: Smart Home Automation 
+
+PROJECT: SMART HOME AUTOMATION
 
 Introduction:
 Welcome to the Smart Home Automation system! This project aims to enhance your living space with intelligent control and monitoring capabilities. Whether you're looking to improve security, convenience, or energy efficiency, our system provides a seamless and integrated solution.
@@ -34,17 +35,14 @@ A mobile device (iOS or Android) for app installation.
 Installation
 
 Setup the Hub:
-
 Connect your smart home hub to your router using an Ethernet cable or Wi-Fi.
 Power on the hub and wait for the indicator light to show it is ready for setup.
 
 Install the Mobile App:
-
 Download the Smart Home Automation app from the Apple App Store or Google Play Store.
 Open the app and follow the on-screen instructions to create an account and connect it to your hub.
 
 Add Devices:
-
 Within the app, navigate to the "Add Device" section.
 Follow the prompts to add each smart device to your system. This may involve scanning a QR code, entering a setup code, or pressing a button on the device.
 Configuration
