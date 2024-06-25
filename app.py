@@ -1,170 +1,164 @@
-using System;
-using System.Collections.Generic;
-
-namespace SmartGridEnergyManagementSystem
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Welcome to the Smart Grid Energy Management System");
-
-            EnergyManager energyManager = new EnergyManager();
-            energyManager.Run();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home Automation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
         }
-    }
-
-    public class EnergyManager
-    {
-        private List<Device> devices;
-        private EnergyMonitor energyMonitor;
-
-        public EnergyManager()
-        {
-            devices = new List<Device>();
-            energyMonitor = new EnergyMonitor(devices);
-            InitializeDevices();
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
-
-        private void InitializeDevices()
-        {
-            devices.Add(new Device("Refrigerator", 150));
-            devices.Add(new Device("Air Conditioner", 2000));
-            devices.Add(new Device("Washing Machine", 500));
-            devices.Add(new Device("Heater", 1500));
-            devices.Add(new Device("Lights", 100));
+        h1 {
+            text-align: center;
+            color: #333;
         }
-
-        public void Run()
-        {
-            bool running = true;
-
-            while (running)
-            {
-                Console.Clear();
-                Console.WriteLine("1. View Energy Usage");
-                Console.WriteLine("2. Control Devices");
-                Console.WriteLine("3. Optimize Energy Usage");
-                Console.WriteLine("4. Exit");
-                Console.Write("Select an option: ");
-
-                string choice = Console.ReadLine();
-
-                switch (choice)
-                {
-                    case "1":
-                        ViewEnergyUsage();
-                        break;
-                    case "2":
-                        ControlDevices();
-                        break;
-                    case "3":
-                        OptimizeEnergyUsage();
-                        break;
-                    case "4":
-                        running = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid option. Please try again.");
-                        break;
-                }
-
-                if (running)
-                {
-                    Console.WriteLine("\nPress Enter to continue...");
-                    Console.ReadLine();
-                }
-            }
+        .section {
+            margin-bottom: 30px;
         }
-
-        private void ViewEnergyUsage()
-        {
-            Console.Clear();
-            Console.WriteLine("Energy Usage:");
-            energyMonitor.DisplayEnergyUsage();
+        .section h2 {
+            margin-top: 0;
+            color: #007bff;
         }
-
-        private void ControlDevices()
-        {
-            Console.Clear();
-            Console.WriteLine("Control Devices:");
-            for (int i = 0; i < devices.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {devices[i].Name} ({(devices[i].IsOn ? "On" : "Off")})");
-            }
-            Console.Write("Select a device to toggle: ");
-            if (int.TryParse(Console.ReadLine(), out int deviceIndex) && deviceIndex > 0 && deviceIndex <= devices.Count)
-            {
-                devices[deviceIndex - 1].Toggle();
-                Console.WriteLine($"{devices[deviceIndex - 1].Name} is now {(devices[deviceIndex - 1].IsOn ? "On" : "Off")}");
-            }
-            else
-            {
-                Console.WriteLine("Invalid device selection.");
-            }
+        .control-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
         }
-
-        private void OptimizeEnergyUsage()
-        {
-            Console.Clear();
-            Console.WriteLine("Optimizing Energy Usage...");
-            energyMonitor.OptimizeUsage();
+        .control-group label {
+            flex: 1;
+            font-size: 1.1em;
+            color: #555;
         }
-    }
-
-    public class EnergyMonitor
-    {
-        private List<Device> devices;
-
-        public EnergyMonitor(List<Device> devices)
-        {
-            this.devices = devices;
+        .control-group select, .control-group input {
+            flex: 2;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-
-        public void DisplayEnergyUsage()
-        {
-            int totalUsage = 0;
-            foreach (var device in devices)
-            {
-                int usage = device.IsOn ? device.PowerUsage : 0;
-                totalUsage += usage;
-                Console.WriteLine($"{device.Name}: {usage}W");
-            }
-            Console.WriteLine($"Total Energy Usage: {totalUsage}W");
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
         }
-
-        public void OptimizeUsage()
-        {
-            // Simple optimization: Turn off devices with the highest power usage first
-            devices.Sort((d1, d2) => d2.PowerUsage.CompareTo(d1.PowerUsage));
-
-            foreach (var device in devices)
-            {
-                if (device.IsOn)
-                {
-                    device.Toggle();
-                    Console.WriteLine($"{device.Name} turned off to save energy.");
-                }
-            }
+        .button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
         }
-    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Home Automation System</h1>
 
-    public class Device
-    {
-        public string Name { get; }
-        public int PowerUsage { get; }
-        public bool IsOn { get; private set; }
+        <!-- Lighting Control Section -->
+        <div class="section">
+            <h2>Lighting Control</h2>
+            <div class="control-group">
+                <label for="living-room-light">Living Room:</label>
+                <select id="living-room-light">
+                    <option value="off">Off</option>
+                    <option value="dim">Dim</option>
+                    <option value="on">On</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="bedroom-light">Bedroom:</label>
+                <select id="bedroom-light">
+                    <option value="off">Off</option>
+                    <option value="dim">Dim</option>
+                    <option value="on">On</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="kitchen-light">Kitchen:</label>
+                <select id="kitchen-light">
+                    <option value="off">Off</option>
+                    <option value="dim">Dim</option>
+                    <option value="on">On</option>
+                </select>
+            </div>
+            <button class="button" onclick="updateLights()">Update Lights</button>
+        </div>
 
-        public Device(string name, int powerUsage)
-        {
-            Name = name;
-            PowerUsage = powerUsage;
-            IsOn = false;
+        <!-- Climate Control Section -->
+        <div class="section">
+            <h2>Climate Control</h2>
+            <div class="control-group">
+                <label for="climate-mode">Mode:</label>
+                <select id="climate-mode">
+                    <option value="cool">Cool</option>
+                    <option value="heat">Heat</option>
+                    <option value="fan">Fan</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="temperature">Set Temperature:</label>
+                <input type="number" id="temperature" min="60" max="80" value="70">
+            </div>
+            <button class="button" onclick="updateClimate()">Set Climate</button>
+        </div>
+
+        <!-- Security System Section -->
+        <div class="section">
+            <h2>Security System</h2>
+            <div class="control-group">
+                <label for="security-system">System Status:</label>
+                <select id="security-system">
+                    <option value="armed">Armed</option>
+                    <option value="disarmed">Disarmed</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="door-lock">Front Door Lock:</label>
+                <select id="door-lock">
+                    <option value="locked">Locked</option>
+                    <option value="unlocked">Unlocked</option>
+                </select>
+            </div>
+            <button class="button" onclick="updateSecurity()">Update Security</button>
+        </div>
+    </div>
+
+    <script>
+        function updateLights() {
+            var livingRoomLight = document.getElementById('living-room-light').value;
+            var bedroomLight = document.getElementById('bedroom-light').value;
+            var kitchenLight = document.getElementById('kitchen-light').value;
+            alert('Lights Updated:\nLiving Room: ' + livingRoomLight + '\nBedroom: ' + bedroomLight + '\nKitchen: ' + kitchenLight);
         }
 
-        public void Toggle()
-        {
-            IsOn = !IsOn;
+        function updateClimate() {
+            var mode = document.getElementById('climate-mode').value;
+            var temperature = document.getElementById('temperature').value;
+            alert('Climate Set to:\nMode: ' + mode + '\nTemperature: ' + temperature + '°F');
         }
-    }
-}
+
+        function updateSecurity() {
+            var securityStatus = document.getElementById('security-system').value;
+            var doorLock = document.getElementById('door-lock').value;
+            alert('Security Updated:\nSystem: ' + securityStatus + '\nFront Door: ' + doorLock);
+        }
+    </script>
+</body>
+</html>
